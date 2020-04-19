@@ -49,6 +49,11 @@ class RoundTrip:
         )
         return [t.translated_text for t in back.translations]
 
+    def back_translate_file(self, file_path, source_language='en-US', target_language='es'):
+        with open(file_path) as f:
+            file_text = [line.strip() for line in f.readlines()]
+        return self.back_translate_batch(file_text, source_language, target_language)
+
 if __name__ == '__main__':
     from sys import stdin
     translator = RoundTrip()
