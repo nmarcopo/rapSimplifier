@@ -3,13 +3,14 @@ from os import walk
 from multiprocessing.pool import ThreadPool
 from tqdm import tqdm
 from sys import stderr, exit
+import argparse
 
 def send_output_to_file(file_name):
     global translator
     global lyrics_dir
     global lyrics_parent_dir
     global lyrics_backtranslated_dir
-    print(f"translating {file_name}...")
+    # print(f"translating {file_name}...")
     # get translation
     result = translator.back_translate_file(file_name)
 
@@ -21,6 +22,10 @@ def send_output_to_file(file_name):
     return f"written file {file_name}"
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--threaded', action='store_true')
+    threaded = parser.parse_args().threaded
+
     global translator
     translator = RoundTrip()
     num_threads = 10
@@ -48,7 +53,11 @@ if __name__ == '__main__':
         exit(1)
     tasks = []
 
-    # multiprocessing for getting translations faster
-    p = ThreadPool(num_threads)
-    for response in tqdm(p.imap_unordered(send_output_to_file, file_names), total=len(file_names)):
-        print(response)
+    if threaded:
+        # multiprocessing for getting translations faster
+        p = ThreadPool(num_threads)
+        for response in tqdm(p.imap_unordered(send_output_to_file, file_names), total=len(file_names)):
+            print(response)
+    else:
+        for response in tqdm(map(send_output_to_file, file_names), total=len(file_names)):
+            print(response)
