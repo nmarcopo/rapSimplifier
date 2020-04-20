@@ -45,7 +45,7 @@ if __name__ == "__main__":
     for fname in tqdm(file_names):
         n_lines = get_file_lines(lyrics_parent_dir + lyrics_dir + fname)
         if file_names_and_lines[fname + '.backtranslated'] != n_lines:
-            print(f"Error, {fname} + backtranslation have different line counts: {file_names_and_lines[fname + '.backtranslated']}, {n_lines}", file=stderr)
+            print(f"Error, {fname} + backtranslation have different line counts: {n_lines}, {file_names_and_lines[fname + '.backtranslated']},", file=stderr)
         else:
             if debug:
-                print(f"No problems here, {file_names_and_lines[fname + '.backtranslated']}, {n_lines}")
+                print(f"No problems here, {n_lines} {file_names_and_lines[fname + '.backtranslated']}")
