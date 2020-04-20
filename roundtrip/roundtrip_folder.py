@@ -1,6 +1,6 @@
 from translate import RoundTrip
 from os import walk
-from multiprocessing import Pool
+from multiprocessing.pool import ThreadPool
 from tqdm import tqdm
 from sys import stderr, exit
 
@@ -22,7 +22,7 @@ def send_output_to_file(file_name):
 if __name__ == '__main__':
     global translator
     translator = RoundTrip()
-    num_processes = 10
+    num_threads = 10
     global lyrics_dir
     lyrics_dir = 'english/'
     global lyrics_parent_dir
@@ -48,6 +48,6 @@ if __name__ == '__main__':
     tasks = []
 
     # multiprocessing for getting translations faster
-    p = Pool(num_processes)
+    p = ThreadPool(num_threads)
     for response in tqdm(p.imap_unordered(send_output_to_file, file_names), total=len(file_names)):
         print(response)
