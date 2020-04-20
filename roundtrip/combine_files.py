@@ -1,9 +1,9 @@
 from shutil import copyfileobj
 from glob import glob
 
-def combine(outfilename):
+def combine(outfilename, parent_dir, lyrics_dir, suffix):
     with open(outfilename, 'wb') as outfile:
-        for filename in glob('lyrics_backtranslated/*.backtranslated'):
+        for filename in glob(lyrics_dir + '*' + 'suffix'):
             if filename == outfilename:
                 # don't want to copy the output into the output
                 continue
@@ -11,4 +11,5 @@ def combine(outfilename):
                 copyfileobj(readfile, outfile)
 
 if __name__ == "__main__":
-    combine('combined_backtranslated.txt')
+    combine('combined_lyrics.txt', '../data/', 'english/', '.txt')
+    combine('combined_backtranslated.txt', '../data/', 'lyrics_backtranslated/', '.backtranslated')
