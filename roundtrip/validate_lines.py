@@ -6,7 +6,10 @@ from tqdm import tqdm
 
 def get_file_lines(file_path):
     with open(file_path, 'r+') as f:
-        buf = mmap(f.fileno(), 0)
+        try:
+            buf = mmap(f.fileno(), 0)
+        except ValueError:
+            return 0
         lines = 0
         readline = buf.readline
         # while True:
@@ -24,9 +27,9 @@ if __name__ == "__main__":
     parser.add_argument('--debug', action='store_true')
     debug = parser.parse_args().debug
 
-    lyrics_parent_dir = './'
+    lyrics_parent_dir = '../data/'
     lyrics_backtranslated_dir = 'lyrics_backtranslated/'
-    lyrics_dir = 'lyrics_test/'
+    lyrics_dir = 'english/'
 
     try:
         (_, _, file_names) = next(walk(lyrics_parent_dir + lyrics_backtranslated_dir))
