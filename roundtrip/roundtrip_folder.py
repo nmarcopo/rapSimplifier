@@ -25,6 +25,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--threaded', action='store_true')
     threaded = parser.parse_args().threaded
+    if threaded:
+        print("Threaded mode enabled.")
 
     global translator
     translator = RoundTrip()
