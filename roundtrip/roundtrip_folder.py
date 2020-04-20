@@ -9,6 +9,7 @@ def send_output_to_file(file_name):
     global lyrics_dir
     global lyrics_parent_dir
     global lyrics_backtranslated_dir
+    print(f"translating {file_name}...")
     # get translation
     result = translator.back_translate_file(file_name)
 
