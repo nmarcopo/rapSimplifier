@@ -32,6 +32,8 @@ class RoundTrip:
         Source language is the language that the original text is in,
         Target language is the intermediate language before it's translated back to source
         """
+        # remove all empty strings from the text_list
+        list(filter(lambda a: a != '', text_list))
         translation = self.client.translate_text(
             parent=self.parent,
             contents=text_list,
