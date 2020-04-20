@@ -1,9 +1,10 @@
 from shutil import copyfileobj
 from glob import glob
+from tqdm import tqdm
 
 def combine(outfilename, parent_dir, lyrics_dir, suffix):
     with open(outfilename, 'wb') as outfile:
-        for filename in glob(parent_dir + lyrics_dir + '*' + 'suffix'):
+        for filename in tqdm(glob(parent_dir + lyrics_dir + '*' + suffix)):
             if filename == outfilename:
                 # don't want to copy the output into the output
                 continue
