@@ -10,7 +10,7 @@ def send_output_to_file(file_name):
     global lyrics_dir
     global lyrics_parent_dir
     global lyrics_backtranslated_dir
-    # print(f"translating {file_name}...")
+    print(f"translating {file_name}...")
     # get translation
     result = translator.back_translate_file(file_name)
 
@@ -35,6 +35,8 @@ if __name__ == '__main__':
     lyrics_parent_dir = '../data/'
     global lyrics_backtranslated_dir
     lyrics_backtranslated_dir = 'lyrics_backtranslated/'
+
+    print("Getting lyrics files...")
     try:
         (_, _, file_names) = next(walk(lyrics_parent_dir + lyrics_dir))
     except StopIteration:
@@ -42,6 +44,7 @@ if __name__ == '__main__':
         exit(1)
 
     # add the directory to file names if they haven't already been translated
+    print("Making sure we don't duplicate already translated ones...")
     try:
         (_, _, backtranslated_file_names) = next(walk(lyrics_parent_dir + lyrics_backtranslated_dir))
     except StopIteration:
@@ -53,6 +56,7 @@ if __name__ == '__main__':
         exit(1)
     tasks = []
 
+    print("Starting translations...")
     if threaded:
         # multiprocessing for getting translations faster
         p = ThreadPool(num_threads)
