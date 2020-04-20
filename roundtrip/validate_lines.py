@@ -2,6 +2,7 @@ from os import walk
 from sys import stderr
 from mmap import mmap
 import argparse
+from tqdm import tqdm
 
 def get_file_lines(file_path):
     with open(file_path, 'r+') as f:
@@ -33,10 +34,12 @@ if __name__ == "__main__":
         print(f"Error, make sure directory {lyrics_parent_dir + lyrics_backtranslated_dir} exists.", file=stderr)
         exit(1)
 
-    file_names_and_lines = {fname : get_file_lines(lyrics_parent_dir + lyrics_backtranslated_dir + fname) for fname in file_names}
+    print("Getting line numbers for translated...")
+    file_names_and_lines = {fname : get_file_lines(lyrics_parent_dir + lyrics_backtranslated_dir + fname) for fname in tqdm(file_names)}
 
     file_names = [fname.replace('.backtranslated', '') for fname in file_names]
-    for fname in file_names:
+    print("Comparing with line numbers in original...")
+    for fname in tqdm(file_names):
         n_lines = get_file_lines(lyrics_parent_dir + lyrics_dir + fname)
         if file_names_and_lines[fname + '.backtranslated'] != n_lines:
             print(f"Error, {fname} + backtranslation have different line counts: {file_names_and_lines[fname + '.backtranslated']}, {n_lines}", file=stderr)
