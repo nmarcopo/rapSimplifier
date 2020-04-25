@@ -53,8 +53,7 @@ t={}
 c={}
 null='NULL'
 #lines=[]
-#lines.append('garcia y asociados\tgarcia and associates')
-#lines.append('sus asociados no son fuertes\this associates are not strong')
+
 ch_words=set([])
 en_words=set([])
 
@@ -82,7 +81,7 @@ for key, val in t.items():
     t[key]=1/len(ch_words)
 
 for x in range(10):
-    f=open('/Users/jwenger/documents/hw5/rapSimplifier/rapSimplifier/data/rap_en.txt')
+    f=open('rapSimplifier/data/rap_en.txt')
     p_sum=0
     for item in c:
         c[item]=0
@@ -94,7 +93,7 @@ for x in range(10):
         #p_sum+=math.log(likelihood(line.split('\t')))
     #print('log probability:',p_sum)
     m_step()
-    f=open('/Users/jwenger/documents/hw5/rapSimplifier/rapSimplifier/data/rap_en.txt')
+    f=open('rapSimplifier/data/rap_en.txt')
 
 #%%
 #c['Trapping|sell']
@@ -105,7 +104,7 @@ for key, value in t.items():
     out.write('{} {} {}\n'.format(words[1],words[0],value))
 
  
-samples=set(['jedi', 'force', 'droid', 'sith', 'lightsabre'])
+samples=set(['the', 'boy', 'great', 'every', 'whip'])
 tops={}
 back={}
 for samp in samples:
@@ -115,8 +114,6 @@ for key, value in t.items():
     if words[1] in samples:
         bisect.insort(tops[words[1]], value) 
         back[value]=words[0]
-for samp in samples:
-    for x in range(1,6):
-        print('{}: translation rank {}: {}, probability: {}'.format(samp, x, back[tops[samp][-x]], tops[samp][-x]))
+
 
 
